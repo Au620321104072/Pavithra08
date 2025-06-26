@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Book List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>📚 My Book List</h1>
+      <input type="text" id="search" placeholder="🔍 Search books..." />
+
+      <ol id="book-list">
+        <!-- Books will be listed here by JavaScript -->
+      </ol>
+
+      <h2>Add New Book</h2>
+      <form id="bookForm">
+        <input
+          type="text"
+          id="title"
+          placeholder="Title"
+          required
+        /><br />
+        <input
+          type="text"
+          id="author"
+          placeholder="Author"
+          required
+        /><br />
+        <button type="submit">➕ Add Book</button>
+      </form>
+    </div>
+
+    <script>
+      const bookList = document.getElementById("book-list");
+      const bookForm = document.getElementById("bookForm");
+
+      function fetchBooks() {
+        fetch("/books")
+          .then((res) => res.json())
+          .then((data) => {
+            bookList.innerHTML = "";
+            data.forEach((book) => {
+              const li = document.createElement("li");
+              li.innerHTML = `
+              <strong>${book.title}</strong> by ${book.author}
+              <button onclick="deleteBook(${book.id})">🗑 Delete</button>
+            `;
+              bookList.appendChild(li);
+            });
+          });
+      }
+      function editBook(id, oldTitle, oldAuthor) {
+        const newTitle = prompt("Edit Title:", oldTitle);
+        const newAuthor = prompt("Edit Author:", oldAuthor);
+
+        if (newTitle && newAuthor) {
+          fetch(`/books/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: newTitle, author: newAuthor }),
+          }).then(() => fetchBooks());
+        }
+      }
+
+      bookForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const title = document.getElementById("title").value;
+        const author = document.getElementById("author").value;
+
+        fetch("/books", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, author }),
+        }).then(() => {
+          bookForm.reset();
+          fetchBooks();
+        });
+      });
+
+      function deleteBook(id) {
+        fetch(`/books/${id}`, { method: "DELETE" }).then(() => fetchBooks());
+      }
+
+      // Initial fetch
+      fetchBooks();
+    </script>
+  </body>
+</html>

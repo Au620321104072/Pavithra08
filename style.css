@@ -1,0 +1,85 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #030c63;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+input[type="text"] {
+  padding: 0.7rem;
+  border: 2px solid #ceced6;
+  border-radius: 4px;
+  margin-left: 120px;
+  padding: 5px;
+  width: 300px;
+  height: 30px;
+}
+input[id="search"]{
+    margin-left: 0;
+    width: 200px;
+}
+button {
+  padding: 0.7rem;
+  width: 150px;
+  height: 50px;
+  background-color: #1284d0;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: auto;
+  
+}
+
+button:hover {
+  background-color: #e85c20;
+}
+
+#book-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#book-list li {
+  background: #f0f0f0;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#book-list button {
+  background-color: #e53935;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
+
+#book-list button:hover {
+  background-color: #c62828;
+}
